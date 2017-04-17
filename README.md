@@ -8,10 +8,7 @@ The modules required in addition to the `Cozmo` module are:
 
 * numpy
 * Pillow
-* Common
 
-Common is a package included in the Git repo: https://github.com/Wizards-of-Coz/Common
-
-The other modules can be installed via pip if not already present:
+The modules can be installed via pip if not already present:
 `pip3 install numpy`
 `pip3 install Pillow`
