@@ -1,7 +1,6 @@
 import numpy as np
 import cozmo
 import asyncio
-from Common.woc import WOC
 from PIL import Image
 import _thread
 import os
@@ -9,13 +8,12 @@ import random
 
 '''
 @class CozmoCoaster
-Take Cozmo on ride and make him dizzy.
+Take Cozmo on a ride and make him dizzy.
 @author - Wizards of Coz
 '''
 
-class CozmoCoaster(WOC):    
+class CozmoCoaster():    
     def __init__(self):
-        WOC.__init__(self)
         self.pitch = 0
         self.dizzy = 0      #0 = normal, 1 = tipsy, 2 = drunk, 3 = throwing up, 4 = out of order
         self.robot = None
@@ -60,7 +58,7 @@ class CozmoCoaster(WOC):
 
     async def end_program(self):
         self.robot.abort_all_actions()
-        dizzy_meter = np.floor_divide(self.dizzy, 100)
+        dizzy_meter = np.floor_divide(self.dizzy, 1)
         
         if dizzy_meter > 4:
             dizzy_meter = 4
