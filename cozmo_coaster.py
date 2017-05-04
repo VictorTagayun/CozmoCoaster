@@ -20,6 +20,7 @@ class CozmoCoaster():
         cozmo.connect(self.run)
 
     async def capture_values(self):
+        #caluclate dizziness and voice pitch according to accelerometer and gyroscope values
         self.acceleration = [0, 0, 0]
         while True:
             if self.robot.is_picked_up:
@@ -38,6 +39,7 @@ class CozmoCoaster():
 
 
     async def fly(self):     
+        #Cozmo behavior when he's in the air - he speaks in a pitch dependent on how fast or how much he is moving, and his dizzy meter value adds up
         while True:
             if self.robot.is_picked_up is True:
                 x = random.randint(1, 4)
@@ -57,6 +59,7 @@ class CozmoCoaster():
             await asyncio.sleep(0.1)    
 
     async def end_program(self):
+        #once he is put down, calculate dizzy meter value and make him act dizzy
         self.robot.abort_all_actions()
         dizzy_meter = np.floor_divide(self.dizzy, 1)
         
@@ -72,6 +75,7 @@ class CozmoCoaster():
 
         count = 0
         while True:
+            #gifs displaying dizziness
             if(not os.path.exists("Media/" + str(int(dizzy_meter)) + "/" + str(count) + ".jpg")):
                 count = 0
             img = Image.open("Media/" + str(int(dizzy_meter)) + "/" + str(count) + ".jpg")
@@ -87,6 +91,7 @@ class CozmoCoaster():
         loop.run_until_complete(self.capture_values())
 
     async def run(self, conn):
+        #start up code and call capture_values. Also start another thread for his in-air screams
         asyncio.set_event_loop(conn._loop)
         self.robot = await conn.wait_for_robot()
         await self.robot.set_lift_height(0).wait_for_completed()
